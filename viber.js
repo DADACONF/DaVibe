@@ -1,13 +1,17 @@
 var INTERVAL = Math.floor(1000 / 60)
 var VIB_LENGTH = 500 
+var CLIFF = 650
 
 // UI
 window.onload = function() {
   var crank = document.querySelector('#refractory')
+  var cliff = document.querySelector('#threshold')
 
   crank.value = +VIB_LENGTH
+  cliff.value = +CLIFF
 
   crank.addEventListener('change', function() { VIB_LENGTH = +crank.value })
+  cliff.addEventListener('change', function() { CLIFF = +cliff.value })
 }
 
 // Business Logix
@@ -24,7 +28,7 @@ function poll() {
 
   while (true) {
     pitch = pitcher().pitch
-    if (!pitch || pitch > 650) { continue }
+    if (!pitch || pitch > CLIFF) { continue }
 
     navigator.vibrate(VIB_LENGTH)
     setTimeout(poll, VIB_LENGTH)
